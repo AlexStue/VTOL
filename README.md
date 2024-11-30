@@ -6,3 +6,4 @@ This is my Arduino-Project for a self-made plane-drone-combination (VTOL).
 
 - Stand 30.11.2024
 
+![alt text](CAD/CAD-1.png)
