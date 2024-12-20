@@ -2,6 +2,11 @@
 #include <SoftwareSerial.h>
 SoftwareSerial hc12(11,10);
 
+/*
+
+
+*/
+
 //__Variablen__________________
 
   byte led = 0;
