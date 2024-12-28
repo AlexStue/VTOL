@@ -1,36 +1,34 @@
-float Angle ( ) {
+void Angle ( ) {
 
 //__Variablen________________________________________________________
 
-float AcXp = AcX; float AcYp = AcY; float AcZp = AcZ;
-float GyXp = GyX; float GyYp = GyY; float GyZp = GyZ;
-float Wxfp = Wxf; float Wyfp = Wyf; float Wzfp = Wzf;
+  float AcXp = AcX; float AcYp = AcY; float AcZp = AcZ;
+  float GyXp = GyX; float GyYp = GyY; float GyZp = GyZ;
+  float Wxfp = Wxf; float Wyfp = Wyf; float Wzfp = Wzf;
 
 //__Sensor________________________________________________________
 
-  Wire.beginTransmission(0x68);
-  Wire.write(0x3B);
-  Wire.endTransmission(false);
-  Wire.requestFrom(0x68,14,true);   // Wertebereiche Standart +-2g, +-500°/s von-32767 bis 32767  1g=16.383
-  AcX = Wire.read()<<8|Wire.read();
-  AcY = Wire.read()<<8|Wire.read();
-  AcZ = Wire.read()<<8|Wire.read();
-  Tmp = Wire.read()<<8|Wire.read();
-  GyX = Wire.read()<<8|Wire.read();// x Roll d
-  GyY = Wire.read()<<8|Wire.read();// y Pitch c
-  GyZ = Wire.read()<<8|Wire.read();// z Yaw b
+  IMU.update();
+  IMU.getAccel(&accelData);
+  AcX = accelData.accelX * 1000 + 8; // milli g
+  AcY = accelData.accelY * 1000 - 92;
+  AcZ = accelData.accelZ * 1000 + 6;
+  IMU.getGyro(&gyroData);
+  GyX = - gyroData.gyroX + 0.4;
+  GyY = - gyroData.gyroY - 0.3;
+  GyZ =   gyroData.gyroZ + 0.4;
 
-  GyX = GyX * 0.0170 + 0.60;  // Offset & Gain
-  GyY = GyY * 0.0170 - 0.94;  // 500°/s = 32767
-  GyZ = GyZ * 0.01526 + 0.32; // 
+  if( GyX < 1 && GyX > -1  ) GyX = 0;
+  if( GyY < 1 && GyY > -1  ) GyY = 0;
+  if( GyZ < 1 && GyZ > -1  ) GyZ = 0;
 
 //__Winkel__________________________________________________________
 
   AcV = sqrt( pow(AcX,2) + pow(AcY,2) + pow(AcZ,2) );
   if( AcV == 0 ) AcV = 1;
 
-  float Wx_Ac= asin(AcY/AcV) *  57.29578 - 1.6;  // Rad in Winkel
-  float Wy_Ac= asin(AcX/AcV) * -57.29578 + 3.21; // Kalibrierung
+  float Wx_Ac= asin(AcY/AcV) * -57.29578 + 0;  // Rad in Winkel
+  float Wy_Ac= asin(AcX/AcV) *  57.29578 + 0; // Kalibrierung -57.29578
   float Wz_Ac= asin(AcZ/AcV) *  57.29578 + 0;
 
   Wx += GyX * Ts_s; // Winkel aus Gyro
@@ -58,18 +56,17 @@ float Wxfp = Wxf; float Wyfp = Wyf; float Wzfp = Wzf;
   float alpha_W =  (Lpf_W * Ts_s) / (1 + Lpf_W * Ts_s);
   Wxf = Wxfp + alpha_W * (Wx - Wxfp);
   Wyf = Wyfp + alpha_W * (Wy - Wyfp);
-  //Wzf = Wzfp + alpha_W * (Wz - Wzfp);
 
 //__Cutoff____________________________________________________________
 
-  if ( Wxf > Cutoff_Angle || Wxf < - Cutoff_Angle ) error = 1;
-  if ( Wyf > Cutoff_Angle || Wyf < - Cutoff_Angle ) error = 1;
+  if ( Wxf > Cutoff_Angle || Wxf < - Cutoff_Angle ) error = 2;
+  if ( Wyf > Cutoff_Angle || Wyf < - Cutoff_Angle ) error = 2;
 
 //__Out_______________________________________________________________
 
-  // Serial.print(map(AcV, 0, 32200, -2000, 2000));
-  // Serial.print('\t');
-  // Serial.print("Angle");
-  // Serial.print('\t');
+  // Serial.print(Wxf);
+  // Serial.print("\t");
+  // Serial.print(Wyf);
+  // Serial.println("\t");
 
 }

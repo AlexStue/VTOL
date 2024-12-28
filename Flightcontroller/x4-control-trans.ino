@@ -1,6 +1,10 @@
-float Regler_Trans( ) {
+void Regler_Trans( ) {
 
 //__Pre________________________________________________________
+
+  int aV = aE;
+  float alpha_Empf =  (Lpf_Empf * Ts_s) / (1 + Lpf_Empf * Ts_s);
+  a = ap + alpha_Empf * (aV - ap);
 
   int aM = 0; int AcVM = 0;
   float R_TrZ_u = 0;

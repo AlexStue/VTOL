@@ -1,4 +1,4 @@
-float Off( ) {
+void Off( ) {
 
   myServos.setPWM( 0, 0, ESC_min);
   myServos.setPWM( 1, 0, ESC_min);
@@ -8,14 +8,9 @@ float Off( ) {
   R_Roll_i  = 0; R_Pitch_i = 0; R_Yaw_i   = 0;
   R_Roll_Ag_i  = 0; R_Pitch_Ag_i = 0;
 
-  //a = 0; b = 0; c = 0; d = 0;
-
   R_TrZ_sat = 0;
   R_TrZ_i = 0;
 
   levelUP = 0;
-
-  // Serial.print("Off");
-  // Serial.print('\t');
 
 }

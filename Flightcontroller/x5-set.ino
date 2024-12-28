@@ -7,17 +7,17 @@ void Stellen( ) {
 
 //_Calib___________________________________________________________________
 
-// int ESC_min_Cal = ESC_min +- 0;
+// int ESC_min_Cal = ESC_min +- 0; // wofür?
 // int ESC_min_Cal = ESC_min +- 0;
 
-//_PreScale______________________________________________________________________
+//_PreScale________________________________________________________________
 
   int Astell = constrain( ESC_min + R_TrZ_sat - R_Pitch_sat - R_Yaw_sat , ESC_min , ESC_max );
   int Bstell = constrain( ESC_min + R_TrZ_sat + R_Pitch_sat - R_Yaw_sat , ESC_min , ESC_max );
   int Cstell = constrain( ESC_min + R_TrZ_sat - R_Roll_sat  + R_Yaw_sat , ESC_min , ESC_max );
   int Dstell = constrain( ESC_min + R_TrZ_sat + R_Roll_sat  + R_Yaw_sat , ESC_min , ESC_max );
 
-//_Stellen______________________________________________________________________
+//_Stellen_________________________________________________________________
 
   myServos.setPWM( 0, 0, Astell); // MotA
   myServos.setPWM( 1, 0, Bstell); // MotB

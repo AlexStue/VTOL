@@ -1,4 +1,15 @@
-float Regler_Rot( ) {
+void Regler_Rot( ) {
+
+//__Pre________________________________________________________
+
+  int bV = bE + ( bE - bEp ) * f_Ctrl_d;
+  int cV = cE + ( cE - cEp ) * f_Ctrl_d;
+  int dV = dE + ( dE - dEp ) * f_Ctrl_d;
+
+  float alpha_Empf =  (Lpf_Empf * Ts_s) / (1 + Lpf_Empf * Ts_s);
+  b = bp + alpha_Empf * (bV - bp);
+  c = cp + alpha_Empf * (cV - cp);
+  d = dp + alpha_Empf * (dV - dp);
 
 // ep
   float R_Roll_ep     = R_Roll_e;
@@ -7,7 +18,7 @@ float Regler_Rot( ) {
   float R_Pitch_Ag_ep = R_Pitch_Ag_e;
   float R_Yaw_ep      = R_Yaw_e;
 
-//__Regler_Winkel___________________________________________________________
+//__Regler_Winkel_____________________________________________
 
 // e
   R_Roll_Ag_e  = ( d - Wxf );
@@ -33,7 +44,7 @@ float Regler_Rot( ) {
   R_Roll_Ag_sat  = constrain(R_Roll_Ag_u,  -R_Roll_Ag_Ksat,  R_Roll_Ag_Ksat);
   R_Pitch_Ag_sat = constrain(R_Pitch_Ag_u, -R_Pitch_Ag_Ksat, R_Pitch_Ag_Ksat);
 
-//__Regler_Geschwindigkeit__________________________________________________
+//__Regler_Geschwindigkeit____________________________________
 
 // e
   R_Roll_e  = (  R_Roll_Ag_u  - GyX );
@@ -70,7 +81,7 @@ float Regler_Rot( ) {
 
   // Wie Integral Limitieren?
 
-//__Out_______________________________________________________________
+//__Out__________________________________________________________
 
   // Serial.print("Rot");
   // Serial.print('\t');
