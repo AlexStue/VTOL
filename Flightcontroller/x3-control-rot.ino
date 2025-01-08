@@ -2,14 +2,7 @@ void Regler_Rot( ) {
 
 //__Pre________________________________________________________
 
-  int bV = bE + ( bE - bEp ) * f_Ctrl_d;
-  int cV = cE + ( cE - cEp ) * f_Ctrl_d;
-  int dV = dE + ( dE - dEp ) * f_Ctrl_d;
 
-  float alpha_Empf =  (Lpf_Empf * Ts_s) / (1 + Lpf_Empf * Ts_s);
-  b = bp + alpha_Empf * (bV - bp);
-  c = cp + alpha_Empf * (cV - cp);
-  d = dp + alpha_Empf * (dV - dp);
 
 // ep
   float R_Roll_ep     = R_Roll_e;

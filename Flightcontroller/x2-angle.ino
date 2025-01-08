@@ -1,6 +1,6 @@
 void Angle ( ) {
 
-//__Variablen________________________________________________________
+//__Variablen_____________________________________________________
 
   float AcXp = AcX; float AcYp = AcY; float AcZp = AcZ;
   float GyXp = GyX; float GyYp = GyY; float GyZp = GyZ;
@@ -22,7 +22,7 @@ void Angle ( ) {
   if( GyY < 1 && GyY > -1  ) GyY = 0;
   if( GyZ < 1 && GyZ > -1  ) GyZ = 0;
 
-//__Winkel__________________________________________________________
+//__Winkel_______________________________________________________
 
   AcV = sqrt( pow(AcX,2) + pow(AcY,2) + pow(AcZ,2) );
   if( AcV == 0 ) AcV = 1;
@@ -41,7 +41,7 @@ void Angle ( ) {
   Wx = Wx * Comb_W + Wx_Ac * (1 - Comb_W); // Fusion in Grad
   Wy = Wy * Comb_W + Wy_Ac * (1 - Comb_W); 
 
-//__Filter__________________________________________________________
+//__Filter_______________________________________________________
 
   float alpha_Gy =  (Lpf_Gy * Ts_s) / (1 + Lpf_Gy * Ts_s);
   GyX = GyXp + alpha_Gy * (GyX - GyXp);
@@ -57,12 +57,12 @@ void Angle ( ) {
   Wxf = Wxfp + alpha_W * (Wx - Wxfp);
   Wyf = Wyfp + alpha_W * (Wy - Wyfp);
 
-//__Cutoff____________________________________________________________
+//__Cutoff_______________________________________________________
 
   if ( Wxf > Cutoff_Angle || Wxf < - Cutoff_Angle ) error = 2;
   if ( Wyf > Cutoff_Angle || Wyf < - Cutoff_Angle ) error = 2;
 
-//__Out_______________________________________________________________
+//__Out__________________________________________________________
 
   // Serial.print(Wxf);
   // Serial.print("\t");

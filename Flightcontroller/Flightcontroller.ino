@@ -25,7 +25,7 @@
   #define Lpf_Ac              80        // 
   #define Lpf_W              100        // 
   #define Lpf_Empf            20        // 
-  #define Ts                  10        // 
+  #define Ts                  20        // 
   #define f_aI                 0.4      //
   #define f_Ctrl_d             3
 
@@ -39,10 +39,12 @@
 
   #define ESC_min            223        // 223
   #define ESC_max            400        // 400
+  #define SERVO_min          100
+  #define SERVO_max          500
 
   #define a_max              100        // 80
   #define b_max               30        // 30
-  #define c_max               30        // 30
+  #define c_max               90        // 30
   #define d_max               30        // 30
 
   #define AsollMax           100        // 
@@ -183,10 +185,11 @@ void loop() {
 
   Tr2 = ( millis() - Tr2p );
 
+  Serial.print(map(c, 0, 200, 90, 500));
   Serial.print('\t');
-  Serial.print(Tr2);
+  Serial.print(c);
   Serial.print('\t');
-  Serial.println(0);
+  Serial.println(count);
 
   Tr1p = millis();
   Tr2p = millis();
